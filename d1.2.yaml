@@ -1,0 +1,41 @@
+template:
+    - sensor:
+        - name: "D1.2 Inflow"
+          unit_of_measurement: "USD/kWh"
+          device_class: monetary
+          state: >
+              {% set month = now().month %}
+              {% set hour = now().hour %}
+              {% if month in [11, 12, 1, 2, 3, 4, 5] %}
+              {% if hour >= 11 and hour < 19 %}
+               0.220
+              {% else %}
+               0.142
+              {% endif %}
+              {% elif month in [6, 7, 8, 9, 10] %}
+              {% if hour >= 11 and hour < 19 %}
+               0.244
+              {% else %}
+               0.144
+              {% endif %}
+              {% endif %}
+    - sensor:
+        - name: "D1.2 Outflow"
+          unit_of_measurement: "USD/kWh"
+          device_class: monetary
+          state: >
+              {% set month = now().month %}
+              {% set hour = now().hour %}
+              {% if month in [11, 12, 1, 2, 3, 4, 5] %}
+              {% if hour >= 11 and hour < 19 %}
+               0.145
+              {% else %}
+               0.066
+              {% endif %}
+              {% elif month in [6, 7, 8, 9, 10] %}
+              {% if hour >= 11 and hour < 19 %}
+               0.169
+              {% else %}
+               0.068
+              {% endif %}
+              {% endif %}
