@@ -1,0 +1,24 @@
+template:
+  - sensor:
+      - name: "D1.11 Inflow"
+        unit_of_measurement: "USD/kWh"
+        device_class: monetary
+        state: >
+          {# Current rates found through the Michigan Public Service Commission's website,
+             https://www.michigan.gov/mpsc . These rates include:
+             * capacity charge
+             * non-capacity charge
+             * delivery charge
+             * Power Supply Cost Recovery (PSCR) charge, static since Nov 2023 but subject to change
+          #}
+          {% set month = now().month %}
+          {% set hour = now().hour %}
+          {% if hour < 15 or hour >= 19 %}
+            0.17859
+          {% else %}
+          {% if month in [10, 11, 12, 1, 2, 3, 4, 5] %}
+            0.1922
+          {% elif month in [6, 7, 8, 9] %}
+            0.23525
+          {% endif %}
+          {% endif %}
