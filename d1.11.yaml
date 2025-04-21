@@ -9,17 +9,17 @@ template:
              * capacity charge
              * non-capacity charge
              * delivery charge
-             * Power Supply Cost Recovery (PSCR) charge, static since Nov 2023 but subject to change
+             * Power Supply Cost Recovery (PSCR) charge of 0.25 cents/kWh, which has been static since November 2024 but is subject to change
           #}
           {% set month = now().month %}
           {% set day_of_week = now().isoweekday() %}
           {% set hour = now().hour %}
           {% if hour < 15 or hour >= 19 or day_of_week in [6, 7] %}
-            0.17859
+            0.17885
           {% else %}
           {% if month in [10, 11, 12, 1, 2, 3, 4, 5] %}
-            0.1922
+            0.19374
           {% elif month in [6, 7, 8, 9] %}
-            0.23525
+            0.23644
           {% endif %}
           {% endif %}
