@@ -4,20 +4,30 @@ template:
         unit_of_measurement: "USD/kWh"
         device_class: monetary
         state: >
+          {# Current rates found in the DTE Electric rate book on the Michigan Public
+             Service Commission's website, https://www.michigan.gov/mpsc . These
+             rates include variable per-kWh charges only:
+             * capacity charge
+             * non-capacity charge
+             * distribution charge
+             * power supply surcharges, including Power Supply Cost Recovery (PSCR)
+             * delivery surcharges
+             These rates do not include fixed monthly charges, credits, or taxes.
+          #}
           {% set month = now().month %}
           {% set day_of_week = now().isoweekday() %}
           {% set hour = now().hour %}
           {% if month in [11, 12, 1, 2, 3, 4, 5] %}
           {% if hour >= 11 and hour < 19 and day_of_week in [1, 2, 3, 4, 5] %}
-           0.234531
+           0.26427
           {% else %}
-           0.144221
+           0.17981
           {% endif %}
           {% elif month in [6, 7, 8, 9, 10] %}
           {% if hour >= 11 and hour < 19 and day_of_week in [1, 2, 3, 4, 5] %}
-           0.261451
+           0.28943
           {% else %}
-           0.146501
+           0.18196
           {% endif %}
           {% endif %}
   - sensor:
@@ -25,19 +35,26 @@ template:
         unit_of_measurement: "USD/kWh"
         device_class: monetary
         state: >
+          {# Current outflow credits found in the DTE Electric rate book on the
+             Michigan Public Service Commission's website, https://www.michigan.gov/mpsc .
+             Rider 18 outflow credits are based on the power supply component of the
+             customer's retail rate plus Power Supply Cost Recovery (PSCR). These rates
+             do not include fixed monthly charges, credits, taxes, delivery charges, or
+             delivery surcharges.
+          #}
           {% set month = now().month %}
           {% set day_of_week = now().isoweekday() %}
           {% set hour = now().hour %}
           {% if month in [11, 12, 1, 2, 3, 4, 5] %}
           {% if hour >= 11 and hour < 19 and day_of_week in [1, 2, 3, 4, 5] %}
-           0.1321
+           0.15564
           {% else %}
-           0.05059
+           0.07118
           {% endif %}
           {% elif month in [6, 7, 8, 9, 10] %}
           {% if hour >= 11 and hour < 19 and day_of_week in [1, 2, 3, 4, 5] %}
-           0.15369
+           0.18080
           {% else %}
-           0.05265
+           0.07333
           {% endif %}
           {% endif %}

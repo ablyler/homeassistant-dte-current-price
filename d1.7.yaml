@@ -4,19 +4,29 @@ template:
         unit_of_measurement: "USD/kWh"
         device_class: monetary
         state: >
+          {# Current rates found in the DTE Electric rate book on the Michigan Public
+             Service Commission's website, https://www.michigan.gov/mpsc . These
+             rates include variable per-kWh charges only:
+             * capacity charge
+             * non-capacity charge
+             * distribution charge
+             * power supply surcharges, including Power Supply Cost Recovery (PSCR)
+             * delivery surcharges
+             These rates do not include fixed monthly charges, credits, or taxes.
+          #}
           {% set month = now().month %}
           {% set day_of_week = now().isoweekday() %}
           {% set hour = now().hour %}
           {% if month in [10, 11, 12, 1, 2, 3, 4, 5] %}
           {% if hour >= 11 and hour < 19 and day_of_week in [1, 2, 3, 4, 5] %}
-            0.15863
+            0.18677
           {% else %}
-            0.13635
+            0.17398
           {% endif %}
           {% elif month in [6, 7, 8, 9] %}
           {% if hour >= 11 and hour < 19 and day_of_week in [1, 2, 3, 4, 5] %}
-            0.193342
+            0.26524
           {% else %}
-            0.13289
+            0.17284
           {% endif %}
           {% endif %}
